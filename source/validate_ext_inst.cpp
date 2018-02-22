@@ -1504,6 +1504,8 @@ spv_result_t ExtInstPass(ValidationState_t& _,
         }
 
         if (p_storage_class != SpvStorageClassUniformConstant &&
+            p_storage_class != SpvStorageClassWorkgroup &&
+            p_storage_class != SpvStorageClassCrossWorkgroup &&
             p_storage_class != SpvStorageClassGeneric) {
           return _.diag(SPV_ERROR_INVALID_DATA)
                  << ext_inst_name() << ": "
@@ -1575,7 +1577,9 @@ spv_result_t ExtInstPass(ValidationState_t& _,
                  << "expected operand P to be a pointer";
         }
 
-        if (p_storage_class != SpvStorageClassGeneric) {
+        if (p_storage_class != SpvStorageClassWorkgroup &&
+            p_storage_class != SpvStorageClassCrossWorkgroup &&
+            p_storage_class != SpvStorageClassGeneric) {
           return _.diag(SPV_ERROR_INVALID_DATA)
                  << ext_inst_name() << ": "
                  << "expected operand P storage class to be Generic";

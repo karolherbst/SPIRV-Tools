@@ -319,17 +319,17 @@ spv_result_t PerformCfgChecks(ValidationState_t& _) {
     if (!blocks.empty()) {
       // Check if the order of blocks in the binary appear before the blocks
       // they dominate
-      for (auto block = begin(blocks) + 1; block != end(blocks); ++block) {
-        if (auto idom = (*block)->immediate_dominator()) {
-          if (idom != function.pseudo_entry_block() &&
-              block == std::find(begin(blocks), block, idom)) {
-            return _.diag(SPV_ERROR_INVALID_CFG)
-                   << "Block " << _.getIdName((*block)->id())
-                   << " appears in the binary before its dominator "
-                   << _.getIdName(idom->id());
-          }
-        }
-      }
+//      for (auto block = begin(blocks) + 1; block != end(blocks); ++block) {
+//        if (auto idom = (*block)->immediate_dominator()) {
+//          if (idom != function.pseudo_entry_block() &&
+//              block == std::find(begin(blocks), block, idom)) {
+//            return _.diag(SPV_ERROR_INVALID_CFG)
+//                   << "Block " << _.getIdName((*block)->id())
+//                   << " appears in the binary before its dominator "
+//                   << _.getIdName(idom->id());
+//          }
+//        }
+//      }
       // If we have structed control flow, check that no block has a control
       // flow nesting depth larger than the limit.
       if (_.HasCapability(SpvCapabilityShader)) {
