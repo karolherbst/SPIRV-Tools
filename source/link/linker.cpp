@@ -741,6 +741,14 @@ spv_result_t Link(const Context& context, const uint32_t* const* binaries,
       return DiagnosticStream(position, consumer, "", SPV_ERROR_INVALID_BINARY)
              << "Failed to build module " << i + 1 << " out of " << num_binaries
              << ".";
+
+    // if we only have one binary, emit it as a binary and return, this will get rid of any library
+    // related decorations in the original binary.
+    if (num_binaries == 1) {
+      ir_context->module()->ToBinary(linked_binary, true);
+      return SPV_SUCCESS;
+    }
+
     modules.push_back(ir_context->module());
     ir_contexts.push_back(std::move(ir_context));
   }
